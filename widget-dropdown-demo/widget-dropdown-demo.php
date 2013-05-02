@@ -36,6 +36,10 @@ class Widget_Dropdown_Demo extends WP_Widget {
 
 
         echo $before_widget;
+
+		print_r($instance);
+
+		// do stuff here
         echo $after_widget;
     }
 
@@ -45,6 +49,7 @@ class Widget_Dropdown_Demo extends WP_Widget {
 
 		//Strip tags from title and name to remove HTML
 		$instance['name'] = strip_tags( $new_instance['name'] );
+		$instance['kwtax'] = $new_instance['kwtax'];
 
 		return $instance;
 
