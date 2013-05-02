@@ -6,6 +6,12 @@
 
 ( function( $ ) {
 
+	wp.customize( 'some_link_color', function( value ) {
+		value.bind( function( to ) {
+			$( 'a' ).css( 'color', to );
+		} );
+	} );
+
 	wp.customize( 'rg_font_h1', function( value ) {
 		value.bind( function( to ) {
 

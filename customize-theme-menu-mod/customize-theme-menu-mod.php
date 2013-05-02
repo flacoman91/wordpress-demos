@@ -53,6 +53,17 @@ function rd_customize_theme( $wp_customize ) {
 			$font2_json => 'Serif',
 		),
 	) );
+
+	$wp_customize->add_setting( 'some_link_color', array(
+			'default'		=> '#ffffff',
+			'transport'		=> 'postMessage'
+		) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'some_link_color', array(
+		'label'		=> 'Link Color',
+		'section'	=> 'colors',
+		'settings'	=> 'some_link_color',
+	) ) );
 }
 
 add_action( 'customize_preview_init', 'rd_customize_customize_preview_js' );
@@ -115,6 +126,7 @@ function rd_customize_add_customizer_css() {
 			$font_family_h1 = 'sans-serif';
 			$font_family_h2_h3 = 'serif';
 			break;
+
 	}
 	?>
 	<style>
@@ -125,6 +137,8 @@ function rd_customize_add_customizer_css() {
 		h2, h3, h4 {
 			font-family: <?php echo $font_family_h2_h3; ?>, serif;
 		}
+
+		a {color: <?php	echo get_theme_mod('some_link_color', 'default_value'); ?>; }
 
 
 	</style>
