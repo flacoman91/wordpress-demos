@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Books Example
- * Description: Simple hacked together books example to demo custom post type, form input 
+ * Description: Simple hacked together books example to demo custom post type, form input
  * and the wp nonce.
  */
 function books_init() {
@@ -153,6 +153,8 @@ function book_inner_custom_box( $post ) {
 /* When the post is saved, saves our custom data */
 function book_save_postdata( $post_id ) {
 
+	if( !isset($_POST['post_type']) )
+		return;
   // First we need to check if the current user is authorised to do this action.
   if ( 'page' == $_POST['post_type'] ) {
     if ( ! current_user_can( 'edit_page', $post_id ) )
