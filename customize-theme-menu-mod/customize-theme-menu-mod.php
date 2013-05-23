@@ -8,6 +8,8 @@
   License: GPLv2
  */
 
+//require_once ('customize-image-control.php');
+
 add_action( 'customize_register', 'rd_customize_theme' );
 
 function rd_customize_theme( $wp_customize ) {
@@ -23,7 +25,6 @@ function rd_customize_theme( $wp_customize ) {
 		'capability' => 'edit_theme_options',
 		'transport' => 'postMessage',
 	) );
-
 
 	// todo: convert to JSON decode
 	$font1 = array(
@@ -64,6 +65,22 @@ function rd_customize_theme( $wp_customize ) {
 		'section'	=> 'colors',
 		'settings'	=> 'some_link_color',
 	) ) );
+
+	$wp_customize->add_setting( 'footer_bg_image', array(
+			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'transport' => 'refresh',
+	) );
+
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'footer_bg_image', array(
+			'label' => __( 'Footer Background Image' ),
+			'section' => 'rd_customize_theme_settings',
+			'settings' => 'footer_bg_image',
+			'context' => 'footer-bg-image',
+			'priority' => 20,
+
+	) ) );
+
 }
 
 add_action( 'customize_preview_init', 'rd_customize_customize_preview_js' );
@@ -140,7 +157,16 @@ function rd_customize_add_customizer_css() {
 
 		a {color: <?php	echo get_theme_mod('some_link_color', 'default_value'); ?>; }
 
+		footer {
+				background-image: url(<?php echo rd_get_footer_bg_image(); ?>);
+		}
+
 
 	</style>
 	<?php
+}
+
+function rd_get_footer_bg_image(){
+	if (get_theme_mod('footer_bg_image'))
+		return get_theme_mod('footer_bg_image');
 }
