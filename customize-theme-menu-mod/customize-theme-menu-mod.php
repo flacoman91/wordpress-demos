@@ -8,11 +8,64 @@
   License: GPLv2
  */
 
-//require_once ('customize-image-control.php');
 
 add_action( 'customize_register', 'rd_customize_theme' );
 
 function rd_customize_theme( $wp_customize ) {
+
+	/**
+	* Customize Image Reloaded Class
+	*
+	* Extend WP_Customize_Image_Control allowing access to uploads made within
+	* the same context
+	* Declaring this inside the customize theme function due to scope issues
+	* with wp bootloader.
+	*
+	*/
+	class My_Customize_Image_Reloaded_Control extends WP_Customize_Image_Control {
+		/**
+		* Constructor.
+		*
+		* @since 3.4.0
+		* @uses WP_Customize_Image_Control::__construct()
+		*
+		* @param WP_Customize_Manager $manager
+		*/
+		public function __construct( $manager, $id, $args = array() ) {
+
+		parent::__construct( $manager, $id, $args );
+
+		}
+
+		/**
+		* Search for images within the defined context
+		* If there's no context, it'll bring all images from the library
+		*
+		*/
+		public function tab_uploaded() {
+		$my_context_uploads = get_posts( array(
+		    'post_type'  => 'attachment',
+		    'meta_key'   => '_wp_attachment_context',
+		    'meta_value' => $this->context,
+		    'orderby'    => 'post_date',
+		    'nopaging'   => true,
+		) );
+
+		?>
+
+		<div class="uploaded-target"></div>
+
+		<?php
+		if ( empty( $my_context_uploads ) )
+		    return;
+
+		foreach ( (array) $my_context_uploads as $my_context_upload )
+		    $this->print_tab_image( esc_url_raw( $my_context_upload->guid ) );
+		}
+
+	} // end class.
+
+
 
 	$wp_customize->add_section( 'rd_customize_theme_settings', array(
 		'title' => 'Custom Settings',
@@ -72,7 +125,7 @@ function rd_customize_theme( $wp_customize ) {
 	) );
 
 
-	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'footer_bg_image', array(
+	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'footer_bg_image', array(
 			'label' => __( 'Footer Background Image' ),
 			'section' => 'rd_customize_theme_settings',
 			'settings' => 'footer_bg_image',
