@@ -145,7 +145,7 @@ function book_inner_custom_box( $post ) {
   // Use get_post_meta to retrieve an existing value from the database and use the value for the form
   $value = get_post_meta( $post->ID, '_my_meta_value_key', true );
   echo '<label for="book_new_field">';
-       _e("Description for this field", 'book_textdomain' );
+       _e("Your Custom Field Here", 'book_textdomain' );
   echo '</label> ';
   echo '<input type="text" id="book_new_field" name="book_new_field" value="'.esc_attr($value).'" size="25" />';
 }
@@ -259,4 +259,17 @@ function dynamic_save_postdata( $post_id ) {
 	$purchase_links = $_POST['purchase_links'];
 
 	update_post_meta( $post_id, 'purchase_links', $purchase_links );
+}
+
+
+/* Filter the single_template with our custom function */
+add_filter( 'template_include', 'single_book_template', 1, 1 );
+
+function single_book_template( $single ) {
+	global $wp_query, $post;
+	/* Checks for single template by post type */
+	if ( isset($post->post_type) && $post->post_type == "book" ) {
+		return dirname( __FILE__ ) . '/single-book.php';
+	}
+	return $single;
 }
