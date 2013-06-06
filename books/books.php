@@ -47,19 +47,19 @@ function book_updated_messages( $messages ) {
 
   $messages['book'] = array(
     0 => '', // Unused. Messages start at index 1.
-    1 => sprintf( __('Book updated. <a href="%s">View book</a>', 'your_text_domain'), esc_url( get_permalink($post_ID) ) ),
-    2 => __('Custom field updated.', 'your_text_domain'),
-    3 => __('Custom field deleted.', 'your_text_domain'),
-    4 => __('Book updated.', 'your_text_domain'),
+    1 => sprintf( __('Book updated. <a href="%s">View book</a>', 'book'), esc_url( get_permalink($post_ID) ) ),
+    2 => __('Custom field updated.', 'book'),
+    3 => __('Custom field deleted.', 'book'),
+    4 => __('Book updated.', 'book'),
     /* translators: %s: date and time of the revision */
-    5 => isset($_GET['revision']) ? sprintf( __('Book restored to revision from %s', 'your_text_domain'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-    6 => sprintf( __('Book published. <a href="%s">View book</a>', 'your_text_domain'), esc_url( get_permalink($post_ID) ) ),
-    7 => __('Book saved.', 'your_text_domain'),
-    8 => sprintf( __('Book submitted. <a target="_blank" href="%s">Preview book</a>', 'your_text_domain'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-    9 => sprintf( __('Book scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview book</a>', 'your_text_domain'),
+    5 => isset($_GET['revision']) ? sprintf( __('Book restored to revision from %s', 'book'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+    6 => sprintf( __('Book published. <a href="%s">View book</a>', 'book'), esc_url( get_permalink($post_ID) ) ),
+    7 => __('Book saved.', 'book'),
+    8 => sprintf( __('Book submitted. <a target="_blank" href="%s">Preview book</a>', 'book'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    9 => sprintf( __('Book scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview book</a>', 'book'),
       // translators: Publish box date format, see http://php.net/date
       date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-    10 => sprintf( __('Book draft updated. <a target="_blank" href="%s">Preview book</a>', 'your_text_domain'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    10 => sprintf( __('Book draft updated. <a target="_blank" href="%s">Preview book</a>', 'book'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
   );
 
   return $messages;
@@ -72,22 +72,22 @@ function codex_add_help_text( $contextual_help, $screen_id, $screen ) {
   //$contextual_help .= var_dump( $screen ); // use this to help determine $screen->id
   if ( 'book' == $screen->id ) {
     $contextual_help =
-      '<p>' . __('Things to remember when adding or editing a book:', 'your_text_domain') . '</p>' .
+      '<p>' . __('Things to remember when adding or editing a book:', 'book') . '</p>' .
       '<ul>' .
-      '<li>' . __('Specify the correct genre such as Mystery, or Historic.', 'your_text_domain') . '</li>' .
-      '<li>' . __('Specify the correct writer of the book.  Remember that the Author module refers to you, the author of this book review.', 'your_text_domain') . '</li>' .
+      '<li>' . __('Specify the correct genre such as Mystery, or Historic.', 'book') . '</li>' .
+      '<li>' . __('Specify the correct writer of the book.  Remember that the Author module refers to you, the author of this book review.', 'book') . '</li>' .
       '</ul>' .
-      '<p>' . __('If you want to schedule the book review to be published in the future:', 'your_text_domain') . '</p>' .
+      '<p>' . __('If you want to schedule the book review to be published in the future:', 'book') . '</p>' .
       '<ul>' .
-      '<li>' . __('Under the Publish module, click on the Edit link next to Publish.', 'your_text_domain') . '</li>' .
-      '<li>' . __('Change the date to the date to actual publish this article, then click on Ok.', 'your_text_domain') . '</li>' .
+      '<li>' . __('Under the Publish module, click on the Edit link next to Publish.', 'book') . '</li>' .
+      '<li>' . __('Change the date to the date to actual publish this article, then click on Ok.', 'book') . '</li>' .
       '</ul>' .
-      '<p><strong>' . __('For more information:', 'your_text_domain') . '</strong></p>' .
-      '<p>' . __('<a href="http://codex.wordpress.org/Posts_Edit_SubPanel" target="_blank">Edit Posts Documentation</a>', 'your_text_domain') . '</p>' .
-      '<p>' . __('<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>', 'your_text_domain') . '</p>' ;
+      '<p><strong>' . __('For more information:', 'book') . '</strong></p>' .
+      '<p>' . __('<a href="http://codex.wordpress.org/Posts_Edit_SubPanel" target="_blank">Edit Posts Documentation</a>', 'book') . '</p>' .
+      '<p>' . __('<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>', 'book') . '</p>' ;
   } elseif ( 'edit-book' == $screen->id ) {
     $contextual_help =
-      '<p>' . __('This is the help screen displaying the table of books blah blah blah.', 'your_text_domain') . '</p>' ;
+      '<p>' . __('This is the help screen displaying the table of books blah blah blah.', 'book') . '</p>' ;
   }
   return $contextual_help;
 }
@@ -180,4 +180,83 @@ function book_save_postdata( $post_id ) {
   add_post_meta($post_ID, '_my_meta_value_key', $mydata, true) or
     update_post_meta($post_ID, '_my_meta_value_key', $mydata);
   // or a custom table (see Further Reading section below)
+}
+
+
+add_action( 'add_meta_boxes', 'book_custom_meta_box' );
+
+/**
+ * add in the dynamic purchase links
+ */
+function book_custom_meta_box() {
+	add_meta_box( 'purchase_links', 'Book Purchase Links', 'dynamic_inner_custom_box' );
+}
+
+/* Do something with the data entered */
+add_action( 'save_post', 'dynamic_save_postdata' );
+
+
+
+/* Render the box content */
+
+function dynamic_inner_custom_box() {
+	global $post;
+	// nonce for verification
+	wp_nonce_field( plugin_basename( __FILE__ ), 'dynamicMeta_noncename' );
+	?>
+	        <div id="meta_inner">
+	<?php
+	//GEt the array of saved meta
+	$purchase_links = get_post_meta( $post->ID, 'purchase_links', true );
+
+	$c = 0;
+	//if ( count( $purchase_links ) > 0 ) {
+	if ( is_array( $purchase_links ) ) {
+		foreach ( $purchase_links as $purchase_link ) {
+			if ( isset( $purchase_link['name'] ) || isset( $purchase_link['purchase_link'] ) ) {
+				printf( '<p>Book Purchase Text <input type="text" name="purchase_links[%1$s][name]" value="%2$s" /> -- Purchase URL : <input type="text" name="purchase_links[%1$s][purchase_link]" value="%3$s" /><input class="button tagadd remove" type="button" value="%4$s"></p>', $c, $purchase_link['name'], $purchase_link['purchase_link'], __( 'Remove Purchase Link', 'book' ) );
+				$c = $c + 1;
+			}
+		}
+	}
+	?>
+	    <span id="here"></span>
+	    <input class="button tagadd add" type="button" value="<?php _e( 'Add Purchase Link', 'book' ); ?>">
+	    <script>
+	        var $ =jQuery.noConflict();
+	        $(document).ready(function() {
+	            var count = <?php echo $c; ?>;
+	            $(".add").click(function() {
+	                count = count + 1;
+
+	                $('#here').append('<p>Book Purchase Text <input type="text" name="purchase_links['+count+'][name]" value="" /> -- Book Purchase URL : <input type="text" name="purchase_links['+count+'][purchase_link]" value="" /><input class="button tagadd remove" type="button" value="<?php _e( 'Remove Purchase Link', 'book' ); ?>">' );
+	                return false;
+	            });
+	            $(".remove").live('click', function() {
+	                $(this).parent().remove();
+	            });
+	        });
+	        </script>
+	    </div><?php
+}
+
+/*  saves our custom data when the post is saved */
+
+function dynamic_save_postdata( $post_id ) {
+	// verify if this is an auto save routine.
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return;
+
+	// verify Nonce and that the request is valid,
+	if ( ! isset( $_POST['dynamicMeta_noncename'] ) )
+		return;
+
+	if ( ! wp_verify_nonce( $_POST['dynamicMeta_noncename'], plugin_basename( __FILE__ ) ) )
+		return;
+
+	// GOOD; we are set, find a save data
+
+	$purchase_links = $_POST['purchase_links'];
+
+	update_post_meta( $post_id, 'purchase_links', $purchase_links );
 }
