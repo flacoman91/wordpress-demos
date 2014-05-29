@@ -1,1 +1,1 @@
-just an example on how to manipulate the menu system
+just an example on how to manipulate the menu system from a plugin
