@@ -12,7 +12,7 @@
 		} );
 	} );
 
-	wp.customize( 'rg_font_h1', function( value ) {
+	wp.customize( 'rd_font_h1', function( value ) {
 		value.bind( function( to ) {
 
 			var obj = jQuery.parseJSON(to);
