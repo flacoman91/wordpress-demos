@@ -73,7 +73,7 @@ function rd_customize_theme( $wp_customize ) {
 	) );
 
 
-	$wp_customize->add_setting( 'rg_font_h1', array(
+	$wp_customize->add_setting( 'rd_font_h1', array(
 		'default' => '',
 		'capability' => 'edit_theme_options',
 		'transport' => 'postMessage',
@@ -99,7 +99,7 @@ function rd_customize_theme( $wp_customize ) {
 
 	// this adds the option to the customize menu
 	// drop down selector
-	$wp_customize->add_control( 'rg_font_h1', array(
+	$wp_customize->add_control( 'rd_font_h1', array(
 		'label' => 'Select Font:',
 		'section' => 'rd_customize_theme_settings',
 		'type' => 'select',
@@ -197,7 +197,7 @@ function rd_customize_add_customizer_css() {
 	$font1_json = json_encode( $font1 );
 	$font2_json = json_encode( $font2 );
 
-	switch ( get_theme_mod( 'rg_font_h1' ) ) {
+	switch ( get_theme_mod( 'rd_font_h1' ) ) {
 		case $font1_json:
 			$font_family_h1 = 'Signika';
 			$font_family_h2_h3 = 'Noto Sans';
