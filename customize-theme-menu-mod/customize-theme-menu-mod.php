@@ -98,6 +98,7 @@ function rd_customize_theme( $wp_customize ) {
 	$font2_json = json_encode( $font2 );
 
 	// this adds the option to the customize menu
+	// drop down selector
 	$wp_customize->add_control( 'rg_font_h1', array(
 		'label' => 'Select Font:',
 		'section' => 'rd_customize_theme_settings',
@@ -112,18 +113,19 @@ function rd_customize_theme( $wp_customize ) {
 			'default'		=> '#ffffff',
 			'transport'		=> 'postMessage'
 		) );
-
+	
+	// a color picker
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'some_link_color', array(
 		'label'		=> 'Link Color',
 		'section'	=> 'colors',
 		'settings'	=> 'some_link_color',
 	) ) );
 
+	// image picker
 	$wp_customize->add_setting( 'footer_bg_image', array(
 			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
 			'transport' => 'refresh',
 	) );
-
 
 	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'footer_bg_image', array(
 			'label' => __( 'Footer Background Image' ),
@@ -133,6 +135,18 @@ function rd_customize_theme( $wp_customize ) {
 			'priority' => 20,
 
 	) ) );
+	
+	// demonstrates how to add a text box to the interface
+	$wp_customize->add_setting( 'p_rgba_color', array(
+		'default' => '',
+	) );
+
+	$wp_customize->add_control( 'p_rgba_color', array(
+		'label' => 'Container Background RGBa Setting',
+		'section' => 'colors',
+		'type' => 'text',
+		'priority' => 40
+	) );
 
 }
 
@@ -213,7 +227,7 @@ function rd_customize_add_customizer_css() {
 		footer {
 				background-image: url(<?php echo rd_get_footer_bg_image(); ?>);
 		}
-
+		p { color: <?php echo get_theme_mod('p_rgba_color', '#ff4');?> }
 
 	</style>
 	<?php
