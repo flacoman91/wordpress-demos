@@ -18,3 +18,5 @@ this will download images to a local path on your server
 a javascript remote control to control the camera.
 
 == Changelog ==
+
+removed admin options page in favor of just shortcode configs
