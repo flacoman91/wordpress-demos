@@ -1,18 +1,13 @@
 <?php
-
-/**
- * @package foscam
- * @version 0.1
- */
 /*
 Plugin Name: Foscam
-Description: This plugin provides support for a foscam video stream through the use of shortcodes
+Description: This plugin provides support for a foscam video stream through the use of shortcodes. With this shortcode, you can embed a whole bunch of camera feeds onto your wordpress blog
 Author: Richard Dinh
 Version: 0.1
 Author URI: http://www.dinhdesigns.com
 */
 
-//[foscam url='http://cw0101.myfoscam.org:20064' usr='user' pwd='user']
+//[foscam url='http://cw0101.myfoscam.org:20064' usr='user' pwd='user' refresh='5000']
 function foscam_func( $atts ) {	
 	
 	$a = shortcode_atts( array(
@@ -38,17 +33,7 @@ add_shortcode('foscam', 'foscam_func');
 
 function foscam_add_script(){		
 	wp_register_script('foscam', plugins_url('foscam.js', __FILE__), array('jquery') );	
-	// how you pass parameters from the php wordpress side to the javascript file
-	//wp_localize_script( 'foscam', 'foscam_options', $foscam_options );	
 	wp_enqueue_script( 'foscam', plugins_url('foscam.js', __FILE__), array('jquery'), '1.0', false );
 }
 
 add_action('wp_enqueue_scripts', 'foscam_add_script');
-
-// need to create a menu page for the options
-// url
-// port
-// usr name
-// password
-// refresh rate
-// add in some remote controls!
