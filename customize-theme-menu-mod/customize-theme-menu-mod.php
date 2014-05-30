@@ -20,7 +20,8 @@ function rd_customize_theme( $wp_customize ) {
 	* the same context
 	* Declaring this inside the customize theme function due to scope issues
 	* with wp bootloader.
-	*
+	* borrowed from ottopress.com
+	* http://ottopress.com/2012/how-to-leverage-the-theme-customizer-in-your-own-themes/
 	*/
 	class My_Customize_Image_Reloaded_Control extends WP_Customize_Image_Control {
 		/**
@@ -64,7 +65,20 @@ function rd_customize_theme( $wp_customize ) {
 		}
 
 	} // end class.
-
+	
+	// borrowed from http://ottopress.com/2012/making-a-custom-control-for-the-theme-customizer/	
+	class Example_Customize_Textarea_Control extends WP_Customize_Control {
+    public $type = 'textarea';
+ 
+    public function render_content() {
+        ?>
+        <label>
+        <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+        <textarea rows="5" style="width:100%;" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea>
+        </label>
+        <?php
+    }
+}
 
 
 	$wp_customize->add_section( 'rd_customize_theme_settings', array(
@@ -147,6 +161,18 @@ function rd_customize_theme( $wp_customize ) {
 		'type' => 'text',
 		'priority' => 40
 	) );
+	
+	// demonstrates how to add a textarea to interface
+	$wp_customize->add_setting( 'textarea_setting', array(
+    'default'        => 'Some default text for the textarea',
+	) );
+
+	$wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'textarea_setting', array(
+		'label'   => 'Textarea Setting',
+		'section' => 'themedemo_demo_settings',
+		'settings'   => 'textarea_setting',
+	) ) );
+
 
 }
 
@@ -163,7 +189,7 @@ function rd_customize_load_fonts() {
 	// inline load the css for the google fonts
 	echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Signika:400,600,700|Noto+Sans:400,400italic,700,700italic|Patua+One|Noto+Serif:400,400italic,700,700italic">';
 }
-
+// enqueuing this to the header.
 add_action( 'wp_head', 'rd_customize_add_customizer_css' );
 
 add_action( 'customize_controls_print_styles', 'rd_customize_add_customizer_css' );
@@ -197,7 +223,25 @@ function rd_customize_add_customizer_css() {
 	$font1_json = json_encode( $font1 );
 	$font2_json = json_encode( $font2 );
 
-	switch ( get_theme_mod( 'rd_font_h1' ) ) {
+	// we do get_theme_mods (plural) and access values via an array. this way we don't hit the db for every single
+	// get_theme_mod call
+	
+	$theme_mods = get_theme_mods();
+	
+	$rd_font_h1 = !empty( $theme_mods['rd_font_h1'] ) ? $theme_mods['rd_font_h1'] : '';	
+	
+	$some_link_color = !empty( $theme_mods['some_link_color'] ) ? $theme_mods['some_link_color'] : '#666'; // set the value in case there isn't one.	
+	
+	$p_rgba_color = !empty( $theme_mods['p_rgba_color'] ) ? $theme_mods['p_rgba_color'] : '#ff4';	
+	
+	$footer_bg_image = !empty( $theme_mods['footer_bg_image'] ) ? $theme_mods['footer_bg_image'] : '';
+	
+	$textarea_setting = !empty( $theme_mods['textarea_setting'] ) ? $theme_mods['textarea_setting'] : 'Abitrary text value';
+		
+	$font_family_h1 = 'Signika';
+	$font_family_h2_h3 = 'Noto Sans';
+	
+	switch ( $rd_font_h1 ) {
 		case $font1_json:
 			$font_family_h1 = 'Signika';
 			$font_family_h2_h3 = 'Noto Sans';
@@ -222,18 +266,17 @@ function rd_customize_add_customizer_css() {
 			font-family: <?php echo $font_family_h2_h3; ?>, serif;
 		}
 
-		a {color: <?php	echo get_theme_mod('some_link_color', 'default_value'); ?>; }
+		a {color: <?php	echo $some_link_color; ?>; }
 
 		footer {
-				background-image: url(<?php echo rd_get_footer_bg_image(); ?>);
+				background-image: url(<?php echo $footer_bg_image; ?>);
 		}
-		p { color: <?php echo get_theme_mod('p_rgba_color', '#ff4');?> }
-
+		p { color: <?php echo $p_rgba_color; // this text came from a textfield ?> } 
+		
 	</style>
+	
+	<-- Some arbitrary text from custom setting text area 		
+		<?php echo $textarea_setting; ?> 	
+	-->
 	<?php
-}
-
-function rd_get_footer_bg_image(){
-	if (get_theme_mod('footer_bg_image'))
-		return get_theme_mod('footer_bg_image');
 }
