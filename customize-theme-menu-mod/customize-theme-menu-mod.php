@@ -169,7 +169,7 @@ function rd_customize_theme( $wp_customize ) {
 
 	$wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'textarea_setting', array(
 		'label'   => 'Textarea Setting',
-		'section' => 'themedemo_demo_settings',
+		'section' => 'rd_customize_theme_settings',
 		'settings'   => 'textarea_setting',
 	) ) );
 
