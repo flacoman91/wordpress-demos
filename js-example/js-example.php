@@ -30,15 +30,20 @@ function js_example_enqueue_scripts(){
 // these scripts get added to all pages due to the action of wp_enqueue_scripts
 add_action( 'wp_enqueue_scripts', 'js_example_enqueue_scripts' );
 
-function load_custom_wp_admin_style() {
-  
-  $js_example_params = array('ADMIN VALUE', 'Another ADMIN VALUE');
-  // you must register your script before you can pass parameters from the php side to the javascript side
-  wp_register_script('jsexample', plugins_url('/js/js-admin-example.js', __FILE__));
-	
-  wp_localize_script('jsexample', 'js_example_params_object', $js_example_params);  
-  wp_localize_script('jsexample', 'js_example_params_single', 'text I just added from code');
-  // this will add the js on any single page.
-  wp_enqueue_script( 'jsexample', plugins_url('js-example') . '/js/js-example.js', array(), '1.0.0', true );
+function load_custom_wp_admin_style($hook) {
+  // you can conditionally load different js on specific screens
+  switch($hook){
+    case 'index.php':
+      // this will add the js on any single page.
+      wp_enqueue_script( 'jsadminexample', plugins_url('js-example') . '/js/js-admin-example.js', array(), '1.0.0', true );
+    break;
+    case 'edit.php':
+      wp_enqueue_script( 'jseditexample', plugins_url('js-example') . '/js/js-edit-example.js', array(), '1.0.0', true );
+    break;
+    case 'post.php':       
+      wp_enqueue_script( 'jspostexample', plugins_url('js-example') . '/js/js-post-example.js', array(), '1.0.0', true );
+    break;
+  }
 }
+//http://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
 add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
