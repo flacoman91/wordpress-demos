@@ -1,5 +1,5 @@
 
-alert("this javascript was loaded with js-example.php plugin");
+alert("This should only appear on admin pages");
 
 alert("this is a single value that was added" + js_example_params_single);
 
