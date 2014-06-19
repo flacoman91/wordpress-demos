@@ -10,6 +10,7 @@ This plugin demonstrates how to add your own custom query vars in WordPress.
 
 This plugin demonstrates how to add your own custom query vars in WordPress. 
 Wordpress does not allow you to use server variables such as $_GET and this 
-is how you can use them in your code.
+is how you can use them in your code to do custom queries and other things 
+in the backend.
 
 == Changelog ==

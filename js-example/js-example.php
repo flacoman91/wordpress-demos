@@ -35,6 +35,7 @@ function load_custom_wp_admin_style($hook) {
   switch($hook){
     case 'index.php':
       // this will add the js on any single page.
+      // notice that there is more than one way to reference a file using plugins_url
       wp_enqueue_script( 'jsadminexample', plugins_url('js-example') . '/js/js-admin-example.js', array(), '1.0.0', true );
     break;
     case 'edit.php':
