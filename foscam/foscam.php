@@ -16,8 +16,11 @@ function foscam_func( $atts ) {
 	
 	$options = foscam_get_options();
 	$url = $options['url'];	
-	
-	return "<img src='$url' name='refresh' id='refresh' onload='reload(this)' onerror='reload(this)'>";	
+	$controller = "<div id='foscam-controller' style='background:url(" . plugins_url('controller.jpg', __FILE__) . ")'><div id='btn-left' class='button'></div>"
+          . "<div id='btn-right' class='button'></div>"
+          . "<div id='btn-down' class='button'></div>"
+          . "<div id='btn-up' class='button'></div></div>";
+	return $controller . "<div id='image-feed'><img src='$url' name='refresh' id='refresh' onload='reload(this)' onerror='reload(this)'></div>";	
 }
 add_shortcode('foscam', 'foscam_func');
 
@@ -32,6 +35,15 @@ function foscam_get_options(){
 
 	//http://cw0101.myfoscam.org:20064/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=user&pwd=user
 	$option['url'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=' . $usr . '&pwd=' . $pwd;
+  $option['url_up'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzMoveUp&usr=' . $usr . '&pwd=' . $pwd;
+	$option['url_down'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzMoveDown&usr=' . $usr . '&pwd=' . $pwd;
+	$option['url_left'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzMoveLeft&usr=' . $usr . '&pwd=' . $pwd;	
+	$option['url_right'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzMoveRight&usr=' . $usr . '&pwd=' . $pwd;
+  $option['url_stop'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzStopRun&usr=' . $usr . '&pwd=' . $pwd;
+  
+  //ptzReset
+  $option['url_reset'] = $url . '/cgi-bin/CGIProxy.fcgi?cmd=ptzReset&usr=' . $usr . '&pwd=' . $pwd;
+  
 	$option['refresh'] = $refresh;
 	
 	return $option;
@@ -41,14 +53,18 @@ function foscam_add_script(){
 	
 	$foscam_options = foscam_get_options();
 		
-	wp_register_script('foscam', plugins_url('foscam.js', __FILE__) );	
+	wp_register_script('foscam', plugins_url('foscam.js', __FILE__),  array('jquery') );	
 	// how you pass parameters from the php wordpress side to the javascript file
 	wp_localize_script( 'foscam', 'foscam_options', $foscam_options );	
-	wp_enqueue_script( 'foscam', plugins_url('foscam.js', __FILE__), null, '1.0', false );
+	wp_enqueue_script( 'foscam', plugins_url('foscam.js', __FILE__),  array('jquery'), '1.0', false );
+  
+// you must use wp_enqueu script to call this function.
+  // see http://codex.wordpress.org/Function_Reference/wp_register_style
+  wp_register_style('foscamstyle', plugins_url('foscam.css', __FILE__));
+  wp_enqueue_style('foscamstyle');
 }
 
 add_action('wp_enqueue_scripts', 'foscam_add_script');
-
 
 // need to create a menu page for the options
 // url
