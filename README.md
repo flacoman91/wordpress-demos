@@ -22,8 +22,10 @@ I'm including in this set of plugins:
 * Custom Menus - example on how to customize menu items
 * Custom Meta Boxes - demonstrates how to add various meta boxes onto a post. demonstrates how to use nonces.
 * Customize Theme Menu Mod - example how to add options to the customize menu to override some color options on the fly. This also injects css into your theme.
+* filters example - example how to use filters. 
 * foscam - just a plugin that allows you to display a camera feed onto any post or page using a shortcode. it demonstrates how to insert an options page and save this information
 * js example - example plugin that demonstrates how to enqueue javascript, load dependencies, and pass parameters from wordpress into the js file.
+* plugin activation example - demonstrates how to use register_activation_hook when a plugin is activated to do some setup stuff - create categories, or activate dependencies.
 * query vars example - example how to use the query_vars filter in order to declare your own custom query vars and how to retrieve them.
 * shortcode example - example on how to declare shortcodes and how to use them 
 * tiny mce addon - demonstrates how to add a custom button into your WYSIWYG in order to insert a shortcode into the editor with a modal dialog. 
