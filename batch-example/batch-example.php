@@ -89,6 +89,8 @@ function batch_example_interface() {
                         $("#batch-example-bar-percent").html( "0%" );
 
                         function batchExampleJob( id ) {
+                            // define the ajax action callback here.
+                            // see add action above
                             $.post( "admin-ajax.php", { action: "batchexamplejob", id: id }, function() {
                                 rt_percent = ( rt_count / rt_total ) * 100;
                                 $("#batch-example-bar").progressbar( "value", rt_percent );

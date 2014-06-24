@@ -18,6 +18,7 @@ pages of the codex. I couldn't find a working downloadable plugin that I
 could install and start working on.
 
 I'm including in this set of plugins:
+* Batch Example - demonstrates how to run a whole bunch of processes without your server timing out.
 * Books - example plugin to demo how to create a custom post type using a plugin. Shows how to create custom meta box.
 * Custom Menus - example on how to customize menu items
 * Custom Meta Boxes - demonstrates how to add various meta boxes onto a post. demonstrates how to use nonces.
