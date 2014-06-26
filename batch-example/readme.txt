@@ -2,7 +2,6 @@
 
 Contributors: flacoman91
 Tags: example, plugin development
-Requires at least: 3.0.1
 
 This plugin demonstrates how to do batch operations in WordPress
 

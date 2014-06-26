@@ -2,6 +2,8 @@
 
 Contributors: flacoman91
 Tags: example, plugin development
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin demonstrates how to upload a file WordPress
 

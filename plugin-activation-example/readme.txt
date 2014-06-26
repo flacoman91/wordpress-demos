@@ -2,7 +2,8 @@
 
 Contributors: flacoman91
 Tags: example, plugin development
-Requires at least: 3.0.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin demonstrates how the register activation hook can be used.
 
