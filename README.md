@@ -36,3 +36,6 @@ I'm including in this set of plugins:
 * Widget Dynamic Fields - demonstrates how to use a widget and have it provide fields dynamically, and not require a hard coding of fields.
 
 Questions, comments, anything else you'd like to see?  Please let me know and I'll try my best to add this.
+
+Check out the slides from WordCamp NYC 2014
+https://docs.google.com/presentation/d/1kLiVnG_RN0pNtlyVC05kIQQLK_ifM5SR4nl0Lj7yx4Y/edit?usp=sharing
