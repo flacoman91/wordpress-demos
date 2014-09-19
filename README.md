@@ -21,7 +21,7 @@ I'm including in this set of plugins:
 * Batch Example - demonstrates how to run a whole bunch of processes without your server timing out.
 * Books - example plugin to demo how to create a custom post type using a plugin. Shows how to create custom meta box.
 * CSV Import - this plugin demonstrates how to upload a CSV file to wordpress and then process it to create categories
-* Custom Menus - example on how to customize menu items
+* Custom Menus - example on how to customize menu items after a theme is set up and installed.
 * Custom Meta Boxes - demonstrates how to add various meta boxes onto a post. demonstrates how to use nonces.
 * Customize Theme Menu Mod - example how to add options to the customize menu to override some color options on the fly. This also injects css into your theme.
 * file upload example - Uploading files into wordpress and using its api to handle saving
