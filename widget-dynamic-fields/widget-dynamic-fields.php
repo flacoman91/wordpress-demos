@@ -22,7 +22,7 @@ class Dynamic_Widget_Dropdown_Demo extends WP_Widget {
     function Dynamic_Widget_Dropdown_Demo() {
         $widget_ops = array( 'classname' => 'agriquip', 'description' => __('Displays Demo Form with dropdown selector', 'agriquip') );
         $control_ops = array( 'width' => 200, 'height' => 350, 'id_base' => 'agriquip-widget' );
-        $this->WP_Widget( 'agriquip-widget', __('Dynamic Dropdown Demo', 'agriquip'), $widget_ops, $control_ops );
+        parent::__construct( 'agriquip-widget', __('Dynamic Dropdown Demo', 'agriquip'), $widget_ops, $control_ops );
     }
 
     function widget( $args, $instance ) {
