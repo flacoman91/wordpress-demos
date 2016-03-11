@@ -55,9 +55,7 @@ function drag_drop_meta_box_callback( $post ) {
 	 * from the database and use the value for the form.
 	 */
 	$value = get_post_meta( $post->ID, 'drag', true );
-	//$select_value = get_post_meta( $post->ID, '_instyle_drag_drop_key', true );
 
-	//var_dump($value);
 	echo '<div class="sortable">';
 	for($i=1; $i<4; $i++){
 		$my_val = $value['drag-' .$i]['value'];
@@ -78,71 +76,7 @@ function drag_drop_meta_box_callback( $post ) {
 	}
 	echo "</div>";
 ?>
-<!--	<div id="sortable" style="float:left">-->
-<!--		--><?php //$field_groups = array();
-//		if (get_post_meta($post->ID,"order_eng_1_1",true)) {
-//			for ($i = 1; $i <= 5; $i++){
-//				$field_groups[get_post_meta($post->ID,"order_eng_".$i."_1",true)] = $i;
-//			}
-//			ksort($field_groups);
-//			foreach ($field_groups as $field_order => $field_id) {?>
-<!--					<tr class="itemthing">-->
-<!--						<th class="title">My Title --><?php //echo $field_order; ?><!--</th>-->
-<!--						<input class="widefat" name="yomama--><?//= $field_id ?><!--"></input>-->
-<!--					</tr>-->
-<!--					<tr><td><input name="ordering_1" type="hidden" class="ordering" value="--><?//= $field_id ?><!--"></td></tr>-->
-<!--				</table>-->
-<!--			--><?// }
-//		} else {
-//			for ($i = 1; $i <= 5; $i++) {?>
-<!--				<table class="form-table dropable">-->
-<!--					<tr class="itemthing">-->
-<!--						<th class="title">My title --><?php //echo $i; ?><!--</th>-->
-<!--						<input class="widefat" name="yomama--><?php //echo $i; ?><!--" />-->
-<!--					</tr>-->
-<!--					<tr>-->
-<!--					<input name="ordering_2" type="hidden" class="ordering"-->
-<!--						value="--><?php //echo $i; ?><!--" />-->
-<!--					</tr>-->
-<!--				</table>-->
-<!--			--><?// }
-//		}?>
-<!--	</div>-->
 
-<!--	<div class="sortable">-->
-<!---->
-<!--		<div></div>-->
-<!---->
-<!--		<div class="group-caption">-->
-<!--			<h4>PARENT #1</h4>-->
-<!--			<div class="move">+</div>-->
-<!--			<div class="group-items">-->
-<!--				<input type="text" name="input-1"/>-->
-<!--				<input type="hidden" name="order-1" class="order" value="1"/>-->
-<!--			</div>-->
-<!--		</div>-->
-<!---->
-<!--		<div class="group-caption">-->
-<!--			<h4>PARENT #2</h4>-->
-<!--			<div class="move">+</div>-->
-<!--			<div class="group-items">-->
-<!--				<input type="text" name="input-2"/>-->
-<!--				<input type="hidden" name="order-2" class="order" value="2"/>-->
-<!--			</div>-->
-<!--		</div>-->
-<!---->
-<!--		<div class="group-caption">-->
-<!--			<h4>PARENT #3</h4>-->
-<!--			<div class="move">+</div>-->
-<!--			<div class="group-items">-->
-<!--				<input type="text" name="input-3"/>-->
-<!--				<input type="hidden" name="order-3" class="order" value="3"/>-->
-<!--			</div>-->
-<!--		</div>-->
-<!---->
-<!--		<div></div>-->
-<!---->
-<!--	</div>-->
 <?php
 }
 
@@ -190,11 +124,11 @@ function drag_drop_save_meta_box_data( $post_id ) {
 	$results = array();
 	for($i=1; $i<4; $i++){
 
-//		<input type="text" name="input-3" order="3"/>
-//		<input type="hidden" name="order-3" value="3"/>
-		//$_POST['input-' . $i];
+		//$_POST['input-' . $i]; // the value of the field.
+
 		//update with correct order
-		//$_POST['order-' . $i]; // key
+		//$_POST['order-' . $i]; // we are going to use the actual value of the order-x as the new key or
+		//position
 		//$results['drag-' . ] = '';
 		$results['drag-' . $_POST['order-' . $i]]['value'] = $_POST['input-' . $i]; // new value
 	}
@@ -209,12 +143,5 @@ function drag_drop_save_meta_box_data( $post_id ) {
 		// Update the meta field in the database.
 		update_post_meta( $post_id, '_drag_drop_value_key', $my_data );
 	}
-	// this is the dropdown meta box
-	if ( isset( $_POST['instyle-author-override'] ) ){
-		
-		$my_data = sanitize_text_field( $_POST['instyle-author-override'] );
-		// Update the meta field in the database.
-		update_post_meta( $post_id, '_instyle_drag_drop_key', $my_data );
-	}	
 }
 add_action( 'save_post', 'drag_drop_save_meta_box_data' );

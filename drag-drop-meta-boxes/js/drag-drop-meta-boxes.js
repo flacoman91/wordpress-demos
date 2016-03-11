@@ -22,10 +22,10 @@ jQuery(document).ready(function ($) {
             var count = index + 1;
             console.log("reorder" + count);
 
-            var shit = $(this).val();
-            console.log("value is"  + shit);
-            var shit = $(this).val(count);
-            // reassign all of the numbers
+            var position = $(this).val();
+            console.log("position value is"  + position);
+            var newvalue = $(this).val(count);
+            // reassign all of the numbers once it's loaded.
 
         })
     });
