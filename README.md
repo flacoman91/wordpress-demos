@@ -24,6 +24,7 @@ I'm including in this set of plugins:
 * Custom Menus - example on how to customize menu items after a theme is set up and installed.
 * Custom Meta Boxes - demonstrates how to add various meta boxes onto a post. demonstrates how to use nonces.
 * Customize Theme Menu Mod - example how to add options to the customize menu to override some color options on the fly. This also injects css into your theme.
+* Drag n Drop Meta Box - example how to drag and drop and save those options in a metabox. useful if you want to create a list and reorder items. 
 * file upload example - Uploading files into wordpress and using its api to handle saving
 * filters example - example how to use filters. 
 * foscam - just a plugin that allows you to display a camera feed onto any post or page using a shortcode. it demonstrates how to insert an options page and save this information
