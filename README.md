@@ -40,3 +40,7 @@ Questions, comments, anything else you'd like to see?  Please let me know and I'
 
 Check out the slides from WordCamp NYC 2014
 https://docs.google.com/presentation/d/1kLiVnG_RN0pNtlyVC05kIQQLK_ifM5SR4nl0Lj7yx4Y/edit?usp=sharing
+
+
+to do: 
+ajax autocomplete examples from a widget and also from metaboxes to pull from Wordpress or external json
