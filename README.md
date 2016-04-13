@@ -44,3 +44,5 @@ https://docs.google.com/presentation/d/1kLiVnG_RN0pNtlyVC05kIQQLK_ifM5SR4nl0Lj7y
 
 to do: 
 ajax autocomplete examples from a widget and also from metaboxes to pull from Wordpress or external json
+tinymce - need an example to show how to use a tinymce in your custom plugin or widget
+media library example - need to have an example to demonstrate how to integrate with media library browse
